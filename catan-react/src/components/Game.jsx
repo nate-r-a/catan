@@ -1,5 +1,7 @@
 import React from 'react';
 import PlayerGame from './PlayerGame'
+import HexGrid from './HexGrid'
+
 
 const Game = ({game}) =>
   <div className="game" key={game.id}>
@@ -9,6 +11,7 @@ const Game = ({game}) =>
         <PlayerGame player_game={pg} key={pg.id}/>
       )
     })}
+    <HexGrid layout={game.layout} />
   </div>
 
 
