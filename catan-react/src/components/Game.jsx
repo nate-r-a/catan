@@ -1,6 +1,7 @@
 import React from 'react';
 import PlayerGame from './PlayerGame'
 import HexGrid from './HexGrid'
+import RollChart from './RollChart'
 
 
 const Game = ({game}) =>
@@ -12,6 +13,7 @@ const Game = ({game}) =>
       )
     })}
     <HexGrid layout={game.layout} />
+    <RollChart dice_rolls={game.dice_rolls} />
   </div>
 
 

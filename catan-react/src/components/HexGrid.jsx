@@ -14,9 +14,7 @@ const HexGrid = ({layout}) => {
 
     return colors[layout[position]]
   }
-
-  console.log(getColor(0))
-
+  
   return (
     <div>
       <svg className="hexgrid" viewBox="0 0 100 100">
