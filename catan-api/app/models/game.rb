@@ -3,7 +3,14 @@ class Game < ApplicationRecord
   has_many :players, through: :player_games
 
   NUMBER_TILES = [5,2,6,3,8,10,9,12,11,4,8,10,9,4,5,6,3,11].freeze
-  RESOURCES = %w[wo sh wh br st].freeze
+  RESOURCES = %w[wo sh wh br st]
+  RESOURCE_NAMES = {
+    wo: "Wood",
+    sh: "Sheep",
+    wh: "Wheat",
+    br: "Brick",
+    st: "Stone"
+  }
 
   # def initialize
   #   @errors = ActiveModel::Errors.new(self)
@@ -49,18 +56,32 @@ class Game < ApplicationRecord
     RESOURCES.each do |resource|
       # Grabs indexes of resource tiles to compare to corresponding number tiles
       resource_indexes = layout.each_index.select { |i| layout[i] == resource }
-      
+
       resource_numbers = []
       resource_indexes.each do |ri|
         # Numbers that have that resource
         resource_numbers << number_tiles[ri]
       end
 
+
+
       resource_counts[resource] = 0
       dice_rolls.each do |roll|
         resource_counts[resource] += resource_numbers.count(roll)
       end
     end
-    resource_counts
+    # puts resource_counts
+    # resource_counts
+
+    data = []
+    puts "!!!!!!!!!!!!!!!"
+    puts resource_counts
+    resource_counts.each do |resource_name, value|
+      puts resource_name
+      puts RESOURCE_NAMES[resource_name.to_sym]
+      data.push({resource_name: RESOURCE_NAMES[resource_name.to_sym], value: value})
+    end
+    puts data
+    data
   end
 end

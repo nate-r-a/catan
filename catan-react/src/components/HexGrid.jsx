@@ -14,10 +14,10 @@ const HexGrid = ({layout}) => {
 
     return colors[layout[position]]
   }
-  
+
   return (
     <div>
-      <svg className="hexgrid" viewBox="0 0 100 100">
+      <svg className="chart" viewBox="0 0 100 100">
         <defs>
           <g id="pod">
             <polygon stroke="#000" stroke-width="0.5" points="9,-5 0,-10 -9,-5 -9,5 0,10 9,5" />

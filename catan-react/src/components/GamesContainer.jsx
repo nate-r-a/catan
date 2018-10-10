@@ -29,7 +29,6 @@ class GamesContainer extends Component {
             </div>
           )
         })}
-        <div id="roll-chart"></div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import  { ComposedChart, Line, XAxis, YAxis, Bar, Tooltip } from 'recharts'
+import  { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, Bar, Tooltip } from 'recharts'
 
 const RollChart = ({dice_rolls}) => {
   function numberRange(start, end) {
@@ -43,17 +43,17 @@ const RollChart = ({dice_rolls}) => {
   }
 
   return (
-    <div className="chart bar rolls">
-      {console.log("Rolls:")}
-      {console.log(rollData(dice_rolls))}
-      <ComposedChart width={500} height={400} data={rollData(dice_rolls)}>
-        <XAxis dataKey="number" />
-        <YAxis />
-        <Bar dataKey="actual" stackId="a" barSize={30} fill="#8884d8" />
-        <Bar dataKey="phantom_sevens" stackId="a" fill="#82ca9d" />
-        <Line type="step" dataKey="expected" />
+    <div className="chart">
+      <ResponsiveContainer width="100%" height={400}>
+        <ComposedChart width={500} height={400} data={rollData(dice_rolls)}>
+          <XAxis dataKey="number" />
+          <YAxis />
+          <Bar dataKey="actual" stackId="a" barSize={30} fill="#8884d8" />
+          <Bar dataKey="phantom_sevens" stackId="a" fill="#82ca9d" />
+          <Line type="step" dataKey="expected" />
 
-      </ComposedChart>
+        </ComposedChart>
+      </ResponsiveContainer>
     </div>
   )
 

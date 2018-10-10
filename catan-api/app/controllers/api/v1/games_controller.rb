@@ -5,8 +5,8 @@ module Api
 
       # GET /games
       def index
-        @games = Game.all.sort
-
+        # @games = Game.all.sort
+        @games = [Game.first]
         # render json: @games, :include => [{ :player_games => { :except => [:created_at, :updated_at] }, ['player_games.players'] }]
         # render json: @games, include: :players
 
@@ -15,6 +15,7 @@ module Api
 
       # GET /games/1
       def show
+        puts @game
         render json: @game, :include => { :player_games => { :except => [:created_at, :updated_at] } }
       end
 
