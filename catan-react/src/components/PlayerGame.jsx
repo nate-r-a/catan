@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
+import { Avatar } from 'antd'
 
 const PlayerGame = ({player_game}) =>
   <h6>
-    {player_game.player_name}
+    <Avatar>{player_game.player_name}</Avatar>
     <span>{player_game.score}</span>
   </h6>
 

@@ -44,9 +44,9 @@ const RollChart = ({dice_rolls}) => {
 
   return (
     <div className="chart">
-      <ResponsiveContainer width="100%" height={400}>
-        <ComposedChart width={500} height={400} data={rollData(dice_rolls)}>
-          <XAxis dataKey="number" />
+      <ResponsiveContainer width="99%" aspect={1}>
+        <ComposedChart data={rollData(dice_rolls)} margin={{ top: 5, right: 5, left: -35, bottom: -10 }}>
+          <XAxis dataKey="number" interval={0} />
           <YAxis />
           <Bar dataKey="actual" stackId="a" barSize={30} fill="#8884d8" />
           <Bar dataKey="phantom_sevens" stackId="a" fill="#82ca9d" />
