@@ -1,6 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import  { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, Bar, Tooltip } from 'recharts'
+import { Popover, Slider } from 'antd'
 
+// TODO: Convert this to smart container to be able to handle:
+// 1) "this" and show tooltip over phantom_sevens bar
+// 2) slider for dice roll history
 const RollChart = ({dice_rolls}) => {
   function numberRange(start, end) {
     return new Array(end - start).fill().map((d, i) => i + start);
@@ -42,18 +46,22 @@ const RollChart = ({dice_rolls}) => {
     return rollData
   }
 
+  function showTooltip(bar) {
+    console.log(bar)
+  }
+
   return (
     <div className="chart">
       <ResponsiveContainer width="99%" aspect={1}>
         <ComposedChart data={rollData(dice_rolls)} margin={{ top: 5, right: 5, left: -35, bottom: -10 }}>
           <XAxis dataKey="number" interval={0} />
           <YAxis />
-          <Bar dataKey="actual" stackId="a" barSize={30} fill="#8884d8" />
-          <Bar dataKey="phantom_sevens" stackId="a" fill="#82ca9d" />
-          <Line type="step" dataKey="expected" />
-
+          <Bar dataKey="actual" stackId="a" barSize={30} fill="#6495ed" />
+          <Bar dataKey="phantom_sevens" stackId="a" fill="#d2d2d2" id="p7s" onMouseOver={showTooltip.bind(null, this)} />
+          <Line type="step" dataKey="expected" stroke="#fff0" dot={{ stroke: "#b72929", strokeWidth: 2 }} />
         </ComposedChart>
       </ResponsiveContainer>
+      <Slider min={1} max={dice_rolls.length} />
     </div>
   )
 

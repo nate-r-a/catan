@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_014110) do
+ActiveRecord::Schema.define(version: 2018_10_15_210219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,10 @@ ActiveRecord::Schema.define(version: 2018_10_03_014110) do
     t.integer "score"
     t.integer "before_rating", default: 1000
     t.integer "after_rating", default: 1000
+    t.boolean "longest_road", default: false
+    t.boolean "largest_army", default: false
+    t.integer "victory_point_cards", default: 0
+    t.string "color"
     t.index ["game_id"], name: "index_player_games_on_game_id"
     t.index ["player_id"], name: "index_player_games_on_player_id"
   end
