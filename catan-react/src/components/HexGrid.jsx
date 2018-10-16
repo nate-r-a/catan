@@ -20,11 +20,11 @@ const HexGrid = ({layout}) => {
       <svg className="chart" viewBox="0 0 100 100">
         <defs>
           <g id="pod">
-            <polygon stroke="#000" stroke-width="0.5" points="9,-5 0,-10 -9,-5 -9,5 0,10 9,5" />
+            <polygon stroke="#000" strokeWidth="0.5" points="9,-5 0,-10 -9,-5 -9,5 0,10 9,5" />
           </g>
         </defs>
 
-        <g class="pod-wrap">
+        <g className="pod-wrap">
           // Row 1
           <use xlinkHref="#pod" position="0" style={{fill: getColor(0)}} transform="translate(32, 20)"/>
           <use xlinkHref="#pod" position="1" style={{fill: getColor(1)}} transform="translate(50, 20)"/>
