@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import Game from './Game'
+import { List } from 'antd'
 
 
 class GamesContainer extends Component {
@@ -26,7 +27,7 @@ class GamesContainer extends Component {
         {this.state.games.map((game) => {
           return (
             <div className="game">
-              <Game game={game} key={game.id} />
+                <Game game={game} key={game.id} />
             </div>
           )
         })}

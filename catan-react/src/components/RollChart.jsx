@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import  { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, Bar, Tooltip, Scatter } from 'recharts'
-import { Popover, Slider } from 'antd'
+import { Popover, Slider, Radio, Menu, Dropdown, Icon, Avatar } from 'antd'
 
 // TODO:
 // 1) "this" and show tooltip over phantom_sevens bar
-// 2) Replace Line with Scatter?
 
 class RollChart extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+
+    console.log(props.dice_rolls)
 
     this.state = {
-      currentRoll: props.dice_rolls.length
+      rollSource: props.dice_rolls,
+      currentRoll: props.dice_rolls.length,
+      phantomSevens: props.phantom_sevens
     }
   }
 
@@ -26,7 +29,7 @@ class RollChart extends Component {
     rollData.push({number: 4, expected: this.state.currentRoll * (3/36) })
     rollData.push({number: 5, expected: this.state.currentRoll * (4/36) })
     rollData.push({number: 6, expected: this.state.currentRoll * (5/36) })
-    rollData.push({number: 7, expected: this.state.currentRoll * (6/36), phantom_sevens: 2 })
+    rollData.push({number: 7, expected: this.state.currentRoll * (6/36), phantom_sevens: this.state.phantomSevens })
     rollData.push({number: 8, expected: this.state.currentRoll * (5/36) })
     rollData.push({number: 9, expected: this.state.currentRoll * (4/36) })
     rollData.push({number: 10, expected: this.state.currentRoll * (3/36) })
@@ -34,7 +37,7 @@ class RollChart extends Component {
     rollData.push({number: 12, expected: this.state.currentRoll * (1/36) })
 
     rollData.map((r) =>{
-      r["actual"] = this.props.dice_rolls.slice(0, this.state.currentRoll).filter(i => i === r["number"]).length
+      r["actual"] = this.state.rollSource.slice(0, this.state.currentRoll).filter(i => i === r["number"]).length
     })
 
     return rollData
@@ -46,19 +49,47 @@ class RollChart extends Component {
     })
   }
 
+  setRollSource = (rolls, all_rolls) => {
+    if (all_rolls) {
+      this.setState({
+        rollSource: rolls,
+        currentRoll: rolls.length,
+        phantomSevens: this.props.phantom_sevens
+
+      })
+    } else {
+      this.setState({
+        rollSource: rolls,
+        currentRoll: rolls.length,
+        phantomSevens: 0
+      })
+    }
+  }
+
   render() {
     return (
       <div className="chart">
         <ResponsiveContainer width="99%" aspect={1}>
           <ComposedChart data={this.rollData()} margin={{ top: 5, right: 5, left: -35, bottom: -10 }}>
             <XAxis dataKey="number" interval={0} />
-            <YAxis />
+            {/* TODO: Adjust YAxis domain for player rolls? */}
+            <YAxis domain={[0, 16]} />
             <Bar dataKey="actual" stackId="a" barSize={30} fill="#6495ed" animationDuration={300} />
-            <Bar dataKey="phantom_sevens" stackId="a" fill="#d2d2d2" animationBegin={300} animationDuration={400} />
+            <Bar dataKey="phantom_sevens" stackId="a" fill="#d2d2d2" animationBegin={100} animationDuration={400} />
             <Line type="step" dataKey="expected" stroke="none" isAnimationActive={false} dot={{ stroke: "#b72929", strokeWidth: 2 }} />
           </ComposedChart>
         </ResponsiveContainer>
-        <Slider min={1} max={this.props.dice_rolls.length} defaultValue={this.props.dice_rolls.length} onChange={this.onSliderChange} />
+
+        <span style={{ fontSize: ".75em" }}>View rolls by: </span>
+        {this.props.rolls_by_player.map((rbp) => {
+          return (
+            <Avatar onClick={this.setRollSource.bind(this, rbp.rolls, false)} shape="square" size={30} style={{ margin: "0 2px" }}>{rbp.name}</Avatar>
+          )
+        })}
+
+        <Avatar onClick={this.setRollSource.bind(this, this.props.dice_rolls, true)} shape="square" size={30} style={{ margin: "0 2px" }}>All</Avatar>
+
+        <Slider min={1} max={this.state.rollSource.length} defaultValue={this.state.rollSource.length} value={this.state.currentRoll} onChange={this.onSliderChange.bind(this)} style={{ margin: "7px 12px" }} />
       </div>
     )
   }

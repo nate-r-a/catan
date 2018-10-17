@@ -12,6 +12,8 @@ function borderColor(pg_color) {
 
 const PlayerGames = ({player_games}) =>
   <List>
+    {/* TODO: Adjust height of list items depending on # of players?
+      Or possibly make 2 rows */}
     {player_games.map((pg) => {
       return(
         <List.Item style={{ padding: "2px 0" }}>
