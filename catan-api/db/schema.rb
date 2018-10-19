@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_210219) do
+ActiveRecord::Schema.define(version: 2018_10_19_034021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 2018_10_15_210219) do
     t.boolean "largest_army", default: false
     t.integer "victory_point_cards", default: 0
     t.string "color"
+    t.integer "wins_at_time"
+    t.integer "games_played_at_time"
+    t.boolean "win"
     t.index ["game_id"], name: "index_player_games_on_game_id"
     t.index ["player_id"], name: "index_player_games_on_player_id"
   end
@@ -47,6 +50,8 @@ ActiveRecord::Schema.define(version: 2018_10_15_210219) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "wins"
+    t.integer "games_played"
   end
 
   add_foreign_key "player_games", "games"

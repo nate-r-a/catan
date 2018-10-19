@@ -23,9 +23,9 @@ layout = %w[br st sh wh br de br sh wo st wo wo sh st sh wh wh wh wo]
 
 game = Game.create(dice_rolls: dice_rolls, barbarian_dice_rolls: barb_rolls, layout: layout)
 
-PlayerGame.create(player: Player.first, score: 9, position: 1, game: game)
-PlayerGame.create(player: Player.second, score: 13, position: 2, game: game)
-PlayerGame.create(player: Player.third, score: 10, position: 3, game: game)
+PlayerGame.create(player: Player.first, score: 9, position: 1, game: game, win: false)
+PlayerGame.create(player: Player.second, score: 13, position: 2, game: game, win: true)
+PlayerGame.create(player: Player.third, score: 10, position: 3, game: game, win: false)
 
 ## Game 2
 dice_rolls = [11,6,7,3,6,11,10,5,11,6,8,5,6,5,6,3,6,8,2,6,5,11,4,8,3,8,11,6,11,10,6]
@@ -34,6 +34,6 @@ layout = %w[sh br wo sh br wo de wh st st st wh sh wo sh wo wh br wh]
 
 game = Game.create(dice_rolls: dice_rolls, phantom_sevens: 2, layout: layout)
 
-PlayerGame.create(player: Player.first, score: 10, position: 1, game: game)
-PlayerGame.create(player: Player.second, score: 4, position: 2, game: game)
-PlayerGame.create(player: Player.third, score: 4, position: 3, game: game)
+PlayerGame.create(player: Player.first, score: 10, position: 1, game: game, win: true)
+PlayerGame.create(player: Player.second, score: 4, position: 2, game: game, win: false)
+PlayerGame.create(player: Player.third, score: 4, position: 3, game: game, win: false)

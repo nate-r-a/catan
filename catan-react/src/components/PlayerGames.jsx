@@ -24,8 +24,9 @@ const PlayerGames = ({player_games}) =>
             style={borderColor(pg.color)}
           />
 
-        <div style={{ paddingLeft:"7px", fontSize:"24px", lineHeight:"50px" }}>
-          {pg.player_name}
+        <div>
+          <span style={{ paddingLeft:"7px", fontSize:"24px", lineHeight:"50px" }}>{pg.player_name}</span>
+          <span>{}</span>
         </div>
         </List.Item>
       )
