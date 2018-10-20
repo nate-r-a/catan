@@ -23,9 +23,9 @@ layout = %w[br st sh wh br de br sh wo st wo wo sh st sh wh wh wh wo]
 
 game = Game.create(dice_rolls: dice_rolls, barbarian_dice_rolls: barb_rolls, layout: layout)
 
-PlayerGame.create(player: Player.first, score: 9, position: 1, game: game, win: false)
-PlayerGame.create(player: Player.second, score: 13, position: 2, game: game, win: true)
-PlayerGame.create(player: Player.third, score: 10, position: 3, game: game, win: false)
+PlayerGame.create(player: Player.first, score: 9, position: 1, game: game, win: false, color: "red")
+PlayerGame.create(player: Player.second, score: 13, position: 2, game: game, win: true, color: "white")
+PlayerGame.create(player: Player.third, score: 10, position: 3, game: game, win: false, color: "blue")
 
 ## Game 2
 dice_rolls = [11,6,7,3,6,11,10,5,11,6,8,5,6,5,6,3,6,8,2,6,5,11,4,8,3,8,11,6,11,10,6]
@@ -34,6 +34,19 @@ layout = %w[sh br wo sh br wo de wh st st st wh sh wo sh wo wh br wh]
 
 game = Game.create(dice_rolls: dice_rolls, phantom_sevens: 2, layout: layout)
 
-PlayerGame.create(player: Player.first, score: 10, position: 1, game: game, win: true)
-PlayerGame.create(player: Player.second, score: 4, position: 2, game: game, win: false)
-PlayerGame.create(player: Player.third, score: 4, position: 3, game: game, win: false)
+PlayerGame.create(player: Player.first, score: 10, position: 1, game: game, win: true, color: "green")
+PlayerGame.create(player: Player.second, score: 4, position: 2, game: game, win: false, color: "blue")
+PlayerGame.create(player: Player.third, score: 4, position: 3, game: game, win: false, color: "brown")
+
+
+## Fake game
+dice_rolls = [6,8,7,11,6,8,8,12,10,8,2,5,8,7,9,11,6,4,7,8,10,4,6,7,5,7,4,11,7,9,7,8,8,6,7,9,6,2,11,11,7,7,5,8,8,12]
+layout = %w[st br sh sh br wo st br st wo de wh sh sh wo wo wh wh wh]
+game = Game.create(dice_rolls: dice_rolls, phantom_sevens: 4, layout: layout)
+
+PlayerGame.create(player: Player.find(1), score: 10, position: 4, game: game, win: true, color: "blue")
+PlayerGame.create(player: Player.find(2), score: 10, position: 2, game: game, win: true, color: "orange")
+PlayerGame.create(player: Player.find(3), score: 10, position: 1, game: game, win: true, color: "white")
+PlayerGame.create(player: Player.find(4), score: 10, position: 5, game: game, win: true, color: "brown")
+PlayerGame.create(player: Player.find(5), score: 10, position: 6, game: game, win: true, color: "red")
+PlayerGame.create(player: Player.find(6), score: 10, position: 3, game: game, win: true, color: "green")

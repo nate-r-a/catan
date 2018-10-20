@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import  { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, Bar, Tooltip, Scatter } from 'recharts'
-import { Popover, Slider, Radio, Menu, Dropdown, Icon, Avatar } from 'antd'
+import { Popover, Slider, Radio, Menu, Dropdown, Icon, Avatar, Select } from 'antd'
 
 // TODO:
 // 1) "this" and show tooltip over phantom_sevens bar
@@ -8,8 +8,6 @@ import { Popover, Slider, Radio, Menu, Dropdown, Icon, Avatar } from 'antd'
 class RollChart extends Component {
   constructor(props) {
     super(props)
-
-    // this.yAxisHeight =
 
     this.state = {
       rollSource: props.dice_rolls,
@@ -49,11 +47,11 @@ class RollChart extends Component {
     })
   }
 
-  setRollSource = (rolls, all_rolls) => {
-    if (all_rolls) {
+  setRollSource = (rolls) => {
+    if (rolls == "all") {
       this.setState({
-        rollSource: rolls,
-        currentRoll: rolls.length,
+        rollSource: this.props.dice_rolls,
+        currentRoll: this.props.dice_rolls.length,
         phantomSevens: this.props.phantom_sevens
 
       })
@@ -66,13 +64,14 @@ class RollChart extends Component {
     }
   }
 
+
+
   render() {
     return (
       <div className="chart">
-        <ResponsiveContainer width="99%" aspect={1}>
+        <ResponsiveContainer width="%" aspect={1.25}>
           <ComposedChart data={this.rollData()} margin={{ top: 5, right: 5, left: -35, bottom: -10 }}>
             <XAxis dataKey="number" interval={0} />
-            {/* TODO: Adjust YAxis domain for player rolls? */}
             <YAxis domain={[0, dataMax => (Math.max(16, dataMax))]} />
             <Bar dataKey="actual" stackId="a" barSize={30} fill="#6495ed" animationDuration={200} />
             <Bar dataKey="phantom_sevens" stackId="a" fill="#d2d2d2" animationBegin={200} animationDuration={400} />
@@ -81,13 +80,16 @@ class RollChart extends Component {
         </ResponsiveContainer>
 
         <span style={{ fontSize: ".75em" }}>View rolls by: </span>
-        {this.props.rolls_by_player.map((rbp) => {
-          return (
-            <Avatar onClick={this.setRollSource.bind(this, rbp.rolls, false)} shape="square" size={30} style={{ margin: "0 2px" }}>{rbp.name}</Avatar>
-          )
-        })}
 
-        <Avatar onClick={this.setRollSource.bind(this, this.props.dice_rolls, true)} shape="square" size={30} style={{ margin: "0 2px" }}>All</Avatar>
+
+        <Select size={"small"} style={{ width: 120 }} defaultValue="All" onChange={this.setRollSource}>
+          <Select.Option value="all">All</Select.Option>
+          {this.props.rolls_by_player.map((rbp) => {
+            return (
+              <Select.Option value={rbp.rolls}> {rbp.name}</Select.Option>
+            )
+          })}
+        </Select>
 
         <Slider min={1} max={this.state.rollSource.length} defaultValue={this.state.rollSource.length} value={this.state.currentRoll} onChange={this.onSliderChange.bind(this)} style={{ margin: "7px 12px" }} />
       </div>

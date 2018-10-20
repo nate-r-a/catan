@@ -10,9 +10,9 @@ import ResourceChart from './ResourceChart'
 
 const Game = ({game}) =>
   <div key={game.id}>
-    <Row gutter={15}>
+    <Row gutter={5}>
+      <Row>{"Game" + game.id}</Row>
       <Col xs={12} sm={24} md={24} lg={6} xl={6} className="scores">
-        <h3>Game {game.id}</h3>
         <PlayerGames player_games={game.player_games} className />
       </Col>
       <Col xs={12} sm={8} md={8} lg={6} xl={6}><HexGrid layout={game.layout} /></Col>
