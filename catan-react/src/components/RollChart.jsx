@@ -9,7 +9,7 @@ class RollChart extends Component {
   constructor(props) {
     super(props)
 
-    console.log(props.dice_rolls)
+    // this.yAxisHeight =
 
     this.state = {
       rollSource: props.dice_rolls,
@@ -73,9 +73,9 @@ class RollChart extends Component {
           <ComposedChart data={this.rollData()} margin={{ top: 5, right: 5, left: -35, bottom: -10 }}>
             <XAxis dataKey="number" interval={0} />
             {/* TODO: Adjust YAxis domain for player rolls? */}
-            <YAxis domain={[0, 16]} />
-            <Bar dataKey="actual" stackId="a" barSize={30} fill="#6495ed" animationDuration={300} />
-            <Bar dataKey="phantom_sevens" stackId="a" fill="#d2d2d2" animationBegin={100} animationDuration={400} />
+            <YAxis domain={[0, dataMax => (Math.max(16, dataMax))]} />
+            <Bar dataKey="actual" stackId="a" barSize={30} fill="#6495ed" animationDuration={200} />
+            <Bar dataKey="phantom_sevens" stackId="a" fill="#d2d2d2" animationBegin={200} animationDuration={400} />
             <Line type="step" dataKey="expected" stroke="none" isAnimationActive={false} dot={{ stroke: "#b72929", strokeWidth: 2 }} />
           </ComposedChart>
         </ResponsiveContainer>
