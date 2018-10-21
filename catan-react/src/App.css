@@ -26,10 +26,7 @@ svg {
   margin: 0 auto;
   width: 100%;
   max-width: 500px;
-}
-
-.resource-chart {
-  max-width: 500px
+  user-select: none;
 }
 
 .recharts-text {
@@ -42,6 +39,7 @@ svg {
 }
 
 .number-tile {
+  user-select: none;
   font-size: 10px;
   font-family: "Courier";
   text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;

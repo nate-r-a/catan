@@ -69,7 +69,7 @@ class RollChart extends Component {
   render() {
     return (
       <div className="chart">
-        <ResponsiveContainer width="%" aspect={1.25}>
+        <ResponsiveContainer width="99%" aspect={1.25}>
           <ComposedChart data={this.rollData()} margin={{ top: 5, right: 5, left: -35, bottom: -10 }}>
             <XAxis dataKey="number" interval={0} />
             <YAxis domain={[0, dataMax => (Math.max(16, dataMax))]} />
