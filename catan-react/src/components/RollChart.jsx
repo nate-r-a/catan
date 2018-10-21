@@ -48,7 +48,7 @@ class RollChart extends Component {
   }
 
   setRollSource = (rolls) => {
-    if (rolls == "all") {
+    if (rolls === "all") {
       this.setState({
         rollSource: this.props.dice_rolls,
         currentRoll: this.props.dice_rolls.length,
