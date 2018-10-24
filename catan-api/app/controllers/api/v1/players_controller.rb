@@ -1,7 +1,7 @@
 module Api
   module V1
     class PlayersController < ApplicationController
-      skip_before_action :verify_authenticity_token
+      # skip_before_action :verify_authenticity_token
       before_action :set_player, only: [:show, :update, :destroy]
 
       # GET /players

@@ -14,19 +14,22 @@ const BlankHexGrid = () => {
   const setFill = (event) => {
     let position = event.target.getAttribute("position")
     let resource = event.target.getAttribute("resource")
+    let newResource
 
     if (resource == undefined) {
-      resource = "wo"
+      newResource = "wo"
       event.target.setAttribute("resource", "wo")
       event.target.style.fill = "green"
-    } else  {
+    } else {
+      console.log(resource)
       let resourceIndex = resourceArray.indexOf(resource)
-      let newResource = resourceArray[(resourceIndex+1) % 6]
+      newResource = resourceArray[(resourceIndex+1) % 6]
+      console.log(newResource)
       event.target.setAttribute("resource", newResource)
       event.target.style.fill = colors[newResource]
     }
 
-    document.querySelector('span[position="' + position + '"]').textContent = resource
+    document.querySelector('span[position="' + position + '"]').textContent = newResource
   }
 
   return (
