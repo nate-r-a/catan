@@ -55,3 +55,35 @@ svg {
   font-style: italic;
   color: gray;
 }
+
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.icon {
+  opacity: .3;
+  filter: grayscale(1);
+  width: 30px;
+  height: 30px;
+}
+
+.button input:checked + label > img {
+  /*background: url("crown_filled.svg") no-repeat;*/
+  opacity: 1;
+  filter: none;
+}
+/* 
+.button input[type=radio]:checked + label > img {
+  background: url("crown_filled.svg") no-repeat;
+  opacity: 1;
+  filter: none;
+} */
+
+.button {
+  padding-left: 20px;
+}

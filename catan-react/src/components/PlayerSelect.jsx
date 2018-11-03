@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Row, Col, Select, Input, Radio, List } from 'antd'
+import { Row, Col, Select, Input, Radio, List, Icon } from 'antd'
 
 const Option = Select.Option
 const InputGroup = Input.Group
@@ -15,14 +15,31 @@ class PlayerSelect extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3000/api/v1/players/')
+    axios.get('http://localhost:3002/api/v1/players/')
     .then(response => {
-      console.log("!!!")
-      console.log(response)
       var playerData = response
       this.setState({players: response.data})
     })
     .catch(error => console.log(error))
+  }
+
+  check(i, name) {
+    let id = name + i
+    let checkboxes = new Array()
+    for (var key in this.refs) {
+      checkboxes.push(this.refs[key])
+    }
+
+    checkboxes = checkboxes.filter(checkbox => checkbox.id.startsWith(name))
+
+    console.log(checkboxes)
+    for (var i = checkboxes.length-1; i >= 0; i--) {
+      if (checkboxes[i].id == id) {
+        continue
+      }
+      checkboxes[i].checked = false
+    }
+
   }
 
 
@@ -38,66 +55,66 @@ class PlayerSelect extends Component {
         </Option>
       )
     })
+
+
+    {/* TODO: Incorporate player position to `id` and `for` */}
+    const crownButton = (i) => {
+      return(
+        <div className="button">
+          <input style={{ appearance: 'none'}} ref={"winner" + i} id={"winner" + i} type="radio" name="winner" />
+          <label for={"winner" + i} style={{ verticalAlign:"middle" }}>
+            <img className="icon" style={{ width: '26px', height: '26px'}} src={ require(`../images/crown_filled.svg`) }/>
+          </label>
+        </div>
+      )
+    }
+
+    const largestArmy = (i) => {
+      return(
+        <div className="button">
+          <input style={{ appearance: 'none'}} ref={"army" + i} id={"army" + i} type="checkbox" name="army" />
+          <label onClick={() => this.check(i, "army")} for={"army" + i} style={{ verticalAlign:"middle" }}>
+            <img className="icon" style={{ width: '26px', height: '26px'}} src={ require(`../images/swords_filled.svg`) }/>
+          </label>
+        </div>
+      )
+    }
+
+    const longestRoad = (i) => {
+      return(
+        <div className="button">
+          <input style={{ appearance: 'none'}} ref={"road" + i} id={"road" + i} type="checkbox" name="road" />
+          <label onClick={() => this.check(i, "road")} for={"road" + i} style={{ verticalAlign:"middle" }}>
+            <img className="icon" style={{ width: '26px', height: '26px'}} src={ require(`../images/road.svg`) }/>
+          </label>
+        </div>
+      )
+    }
+
+
     {/* TODO: Limit player selection to 6 players */}
     {/* TODO: Oops, maybe use a different Select thing (see input page) */}
     {/* TODO: Change Radio buttons to some sort of Checkbox that
       disables the others when checked */}
+    {/* TODO: span.ant-checkbox-inner : can set background-color for color selection */}
     return (
       <div>
         <Row>
           <List>
-            <RadioGroup>
-              <List.Item style={{ width: '100%'}} actions={[<Radio value={1} />]}>
-                <InputGroup compact>
-                  <Input disabled={true} addonBefore="1" style={{ width: '30px' }}/>
-                  <Select style={{ width: '20%' }}>
-                    {playerList}
-                  </Select>
-                  <Input style={{ width: '60%' }}/>
-                </InputGroup>
-              </List.Item>
-
-              {/* TODO: Change this width to 100%?  */}
-              <List.Item style={{ width: '800px'}} actions={[<Radio value={2} />]}>
-                <InputGroup compact>
-                  <Input disabled={true} addonBefore="2" style={{ width: '30px' }}/>
-                  <Select style={{ width: '20%' }}>
-                    {playerList}
-                  </Select>
-                  <Input style={{ width: '60%' }}/>
-                </InputGroup>
-              </List.Item>
-            </RadioGroup>
+            <List.Item>
+              <Input disabled={true} addonBefore="1" style={{ width: '30px' }}/>
+              <Select style={{ minWidth: '150px', maxWidth: '200px', width: '20%' }}>
+                {playerList}
+              </Select>
+              {crownButton(1)}
+              {crownButton(2)}
+              {crownButton(3)}
+              {longestRoad(1)}
+              {largestArmy(1)}
+            </List.Item>
           </List>
         </Row>
-
-        <List>
-          <List.Item>
-            test content
-          </List.Item>
-          <List.Item>
-            test content
-          </List.Item>
-
-        </List>
-
-
-
-
-        <Select
-          mode="multiple"
-          style={{ width: '500px', marginBottom: '400px' }}
-          size="large"
-          allowClear={true}
-        >
-          {playerList}
-        </Select>
       </div>
-
-
-
-
-
     )
   }
 }
