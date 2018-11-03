@@ -77,12 +77,12 @@ input[type="radio"] {
   opacity: 1;
   filter: none;
 }
-/* 
-.button input[type=radio]:checked + label > img {
-  background: url("crown_filled.svg") no-repeat;
-  opacity: 1;
-  filter: none;
-} */
+
+.icon {
+  width: 26px;
+  height: 26px;
+  margin-top: 3px;
+}
 
 .button {
   padding-left: 20px;
