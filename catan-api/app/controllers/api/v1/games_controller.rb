@@ -22,10 +22,12 @@ module Api
 
       # POST /games
       def create
+        puts "!!!"
+        puts game_params
         @game = Game.new(game_params)
 
-        if @game.save
-          render json: @game, status: :created, location: @game
+        if @game.save!
+          render json: @game#, status: :created, location: @game
         else
           render json: @game.errors, status: :unprocessable_entity
         end
@@ -53,7 +55,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def game_params
-          params.fetch(:game, {})
+          params.permit(:dice_rolls, :layout, player_games_attributes: [:player_id, :game_id, :win, :score, :position])
         end
     end
   end

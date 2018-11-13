@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
-  has_many :player_games, -> { order(:position) }
+  has_many :player_games, -> { order("position") }, inverse_of: :game
+  accepts_nested_attributes_for :player_games
   has_many :players, through: :player_games
 
   NUMBER_TILES = [5,2,6,3,8,10,9,12,11,4,8,10,9,4,5,6,3,11].freeze

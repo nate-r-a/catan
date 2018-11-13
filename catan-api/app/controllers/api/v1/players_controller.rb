@@ -21,7 +21,7 @@ module Api
         @player = Player.new(player_params)
 
         if @player.save
-          render json: @player, status: :created, location: @player
+          render json: @player
         else
           render json: @player.errors, status: :unprocessable_entity
         end
@@ -49,7 +49,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def player_params
-          params.fetch(:player, {})
+          params.require(:player).permit(:name)
         end
     end
   end

@@ -48,7 +48,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def player_game_params
-          params.fetch(:player_game, {})
+          params.permit(:player_id, :game_id, :win, :score, :position)
         end
     end
   end
