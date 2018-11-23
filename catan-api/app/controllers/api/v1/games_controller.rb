@@ -55,7 +55,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def game_params
-          params.permit(:dice_rolls, :layout, player_games_attributes: [:player_id, :game_id, :win, :score, :position])
+          params.permit(:dice_rolls, :layout, player_games_attributes: [:player_id, :game_id, :win, :score, :position, :largest_army])
         end
     end
   end
