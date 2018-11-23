@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GamesContainer from './components/GamesContainer'
 import PlayerSelect from './components/PlayerSelect'
+import GameForm from './components/GameForm'
 import './App.css';
 
 class App extends Component {
@@ -8,9 +9,10 @@ class App extends Component {
     return (
       <div className="App">
         <h2>Games</h2>
-        <GamesContainer />
-        <PlayerSelect />
-        <div id="chart"></div>
+        {/* <GamesContainer />
+        <PlayerSelect /> */}
+        <GameForm />
+        <hr/>
       </div>
     );
   }

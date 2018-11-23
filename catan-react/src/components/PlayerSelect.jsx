@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Row, Col, Select, Input, Radio, List, Icon } from 'antd'
+import { Row, Col, Select, Input, Radio, List, Icon, Slider, InputNumber, Switch } from 'antd'
 
 const Option = Select.Option
 const InputGroup = Input.Group
@@ -10,7 +10,8 @@ class PlayerSelect extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      players: []
+      players: [],
+      playerCount: 3
     }
   }
 
@@ -41,7 +42,13 @@ class PlayerSelect extends Component {
     }
   }
 
+  updatePlayerCount = (e) => {
+    this.setState({playerCount: e.target.value})
+  }
+
   render() {
+    let colors = ["red", "blue", "white", "orange", "green", "saddlebrown"]
+
     const playerList = this.state.players.map((player) => {
       return(
         <Option key={player.name}>
@@ -88,6 +95,15 @@ class PlayerSelect extends Component {
       )
     }
 
+    const victoryPointCards = (i) => {
+      return(
+        <div className="button">
+          <img className="icon" style={{ filter:'none', opacity: .7 }} src={ require(`../images/backstage_filled.svg`) }/>
+          <InputNumber min={0} max={5} size="small"/>
+        </div>
+      )
+    }
+
     const playerCard = (i) => {
       return(
         <List.Item style={{ paddingTop: "5px", paddingBottom: "5px" }}>
@@ -95,26 +111,50 @@ class PlayerSelect extends Component {
           <Select style={{ minWidth: '150px', maxWidth: '200px', width: '20%' }}>
             {playerList}
           </Select>
+          <Select style={{ width: '55px', fontSize:'20px'}}>
+            {colors.map((color) => {
+              let style = {color: color}
+              let textStyle = {color: color}
+              if (color == "white") {
+                style = {color: "#f1f1f1"}
+                textStyle = {color: "#ababab"}
+              }
+              return(
+                <Option value={color} key={color}>
+                  <span style={style}>■ </span>
+                </Option>
+              )
+            })}
+          </Select>
+          <InputNumber min={2} max={10} defaultValue={2} />
           {crownButton(i)}
           {longestRoad(i)}
           {largestArmy(i)}
+          {victoryPointCards(i)}
         </List.Item>
       )
     }
-
 
     {/* TODO: Limit player selection to 6 players */}
     {/* TODO: Oops, maybe use a different Select thing (see input page) */}
     {/* TODO: Change Radio buttons to some sort of Checkbox that
       disables the others when checked */}
     {/* TODO: span.ant-checkbox-inner : can set background-color for color selection */}
+    let cards = []
+    for (var i=0; i < this.state.playerCount; i++) {
+      cards.push(playerCard(i+1))
+    }
+
     return (
       <div>
+        {/*<Slider min={3} max={6} tipFormatter={null} dots={true} marks={{3:3, 4:4, 5:5, 6:6}} onChange={this.updatePlayerCount} />*/}
+        <Radio.Group onChange={this.updatePlayerCount} value={this.state.playerCount}>
+          <span style={{marginRight: '18px'}}>Number of players:</span>
+          <Radio value={3}>3</Radio>
+          <Radio value={4}>4</Radio>
+        </Radio.Group>
         <List>
-          {playerCard(1)}
-          {playerCard(2)}
-          {playerCard(3)}
-          {playerCard(4)}
+          {cards}
         </List>
       </div>
     )

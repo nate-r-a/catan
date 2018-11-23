@@ -68,8 +68,9 @@ input[type="radio"] {
 .icon {
   opacity: .3;
   filter: grayscale(1);
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
+  margin-top: 3px;
 }
 
 .button input:checked + label > img {
@@ -78,12 +79,14 @@ input[type="radio"] {
   filter: none;
 }
 
-.icon {
-  width: 26px;
-  height: 26px;
-  margin-top: 3px;
+.button {
+  padding: 0 10px;
 }
 
-.button {
-  padding-left: 20px;
+body {
+  /* background-color: beige; */
+}
+
+hr {
+  margin-bottom: 300px;
 }
