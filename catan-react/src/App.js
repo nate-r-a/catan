@@ -9,8 +9,8 @@ class App extends Component {
     return (
       <div className="App">
         <h2>Games</h2>
-        {/* <GamesContainer />
-        <PlayerSelect /> */}
+        <GamesContainer />
+        {/*<PlayerSelect />*/}
         <GameForm />
         <hr/>
       </div>

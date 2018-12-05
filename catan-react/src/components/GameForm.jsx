@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Form, Input, InputNumber, Button, Icon, Select } from 'antd'
+import { Form, Input, InputNumber, Button, Icon, Select, Row, Col } from 'antd'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -99,7 +99,6 @@ class GameForm extends Component {
       )
     }
 
-    {/* TODO: Set getFieldDecorator default value???? I don't know how this works*/}
     const largestArmy = (i) => {
       return(
         <div className="button">
@@ -144,63 +143,44 @@ class GameForm extends Component {
 
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
 
+    const newPlayerGameRow = (i) => {
+      return(
+        <Row>
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].player_id`, {
+              rules: [{ required: true, message: 'Please input your name!' }], initialValue: "2"
+            })(
+              <Select style={{width: "120px"}}>
+                {playerList}
+              </Select>
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].score`, {
+              rules: [{ required: true }], initialValue: "5"
+            })(
+              <InputNumber placeholder="score" />
+            )}
+          </FormItem>
+
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].win`)(
+              crownButton(i)
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].largest_army`, {valuePropName: 'checked', initialValue: false})(
+              largestArmy(i)
+            )}
+          </FormItem>
+        </Row>
+      )
+    }
+
     return (
       <Form layout='inline' onSubmit={this.handlePlayerSubmit}>
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[0].player_id', {
-            rules: [{ required: true, message: 'Please input your name!' }], initialValue: "2"
-          })(
-            <Select style={{width: "120px"}}>
-              {playerList}
-            </Select>
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[0].score', {
-            rules: [{ required: true }], initialValue: "5"
-          })(
-            <InputNumber placeholder="score" />
-          )}
-        </FormItem>
-
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[0].win')(
-            crownButton(0)
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[0].largest_army', {valuePropName: 'checked', initialValue: false})(
-            largestArmy(0)
-          )}
-        </FormItem>
-
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[1].player_id', {
-            rules: [{ required: true, message: 'Please input your name!' }], initialValue: "1"
-          })(
-            <Select style={{width: "120px"}}>
-              {playerList}
-            </Select>
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[1].score', {
-            rules: [{ required: true }], initialValue: "10"
-          })(
-            <InputNumber placeholder="score" />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[1].win')(
-            crownButton(1)
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('player_games_attributes[1].largest_army', {valuePropName: 'checked', initialValue: false})(
-            largestArmy(1)
-          )}
-        </FormItem>
-
+        {newPlayerGameRow(0)}
+        {newPlayerGameRow(1)}
         <FormItem>
           <Button type="primary" htmlType="submit">
             Create
