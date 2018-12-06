@@ -69,6 +69,7 @@ const BlankHexGrid = () => {
         </g>
       </svg>
 
+      //TODO: Make this invisible, use it to fill in Input field for form
       <p>
         <span position="0"></span>
         <span position="1"></span>

@@ -18,7 +18,6 @@ const Game = ({game}) =>
       </Col>
       <Col xs={12} sm={8} md={8} lg={6} xl={6}>
         <HexGrid layout={game.layout} />
-        <BlankHexGrid />
       </Col>
       <Col xs={12} sm={8} md={8} lg={6} xl={6}>
         <RollChart

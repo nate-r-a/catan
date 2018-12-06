@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Form, Input, InputNumber, Button, Icon, Select, Row, Col } from 'antd'
+import { Form, Input, InputNumber, Button, Icon, Select, Row, Col, Radio } from 'antd'
+import BlankHexGrid from './BlankHexGrid'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -37,7 +38,7 @@ class GameForm extends Component {
     checkboxes = checkboxes.filter(checkbox => checkbox.id.startsWith(name))
 
     for (var i = checkboxes.length-1; i >= 0; i--) {
-      var field_key = `player_games_attributes[${i}].largest_army`
+      var field_key = `player_games_attributes[${i}].${name}`
       if (checkboxes[i].id == id) {
         if (this.props.form.getFieldValue(field_key) == false) {
           var update_object = {[field_key]: true}
@@ -85,6 +86,10 @@ class GameForm extends Component {
     });
   }
 
+  updatePlayerCount = (e) => {
+    this.setState({playerCount: e.target.value})
+  }
+
   render() {
     {/* TODO: Incorporate player position to `id` and `for` */}
     {/* TODO: Just make this a checkbox like the others, or really figure out how radio buttons work (how to send values when checked/unchecked) */}
@@ -99,11 +104,22 @@ class GameForm extends Component {
       )
     }
 
+    const newCrownButton = (i) => {
+      return(
+        <div className="button">
+          <input style={{ appearance: 'none'}} ref={"win" + i} id={"win" + i} type="checkbox" name="win" value="true" />
+          <label onClick={() => this.check(i, "win")} for={"win" + i} style={{ verticalAlign:"middle" }}>
+            <img className="icon" src={ require(`../images/crown_filled.svg`) }/>
+          </label>
+        </div>
+      )
+    }
+
     const largestArmy = (i) => {
       return(
         <div className="button">
-          <input style={{ appearance: 'none'}} ref={"army" + i} id={"army" + i} type="checkbox" name="army" value="true" />
-          <label onClick={() => this.check(i, "army")} for={"army" + i} style={{ verticalAlign:"middle" }}>
+          <input style={{ appearance: 'none'}} ref={"largest_army" + i} id={"largest_army" + i} type="checkbox" name="largest_army" value="true" />
+          <label onClick={() => this.check(i, "largest_army")} for={"largest_army" + i} style={{ verticalAlign:"middle" }}>
             <img className="icon" src={ require(`../images/swords_filled_no_dots.svg`) }/>
           </label>
         </div>
@@ -113,8 +129,8 @@ class GameForm extends Component {
     const longestRoad = (i) => {
       return(
         <div className="button">
-          <input style={{ appearance: 'none'}} ref={"road" + i} id={"road" + i} type="checkbox" name="road" value={true} />
-          <label onClick={() => this.check(i, "road")} for={"road" + i} style={{ verticalAlign:"middle" }}>
+          <input style={{ appearance: 'none'}} ref={"longest_road" + i} id={"longest_road" + i} type="checkbox" name="longest_road" value={true} />
+          <label onClick={() => this.check(i, "longest_road")} for={"longest_road" + i} style={{ verticalAlign:"middle" }}>
             <img className="icon" src={ require(`../images/road.svg`) }/>
           </label>
         </div>
@@ -148,7 +164,7 @@ class GameForm extends Component {
         <Row>
           <FormItem>
             {getFieldDecorator(`player_games_attributes[${i}].player_id`, {
-              rules: [{ required: true, message: 'Please input your name!' }], initialValue: "2"
+              rules: [{ required: true, message: 'Please input your name!' }], initialValue: "5"
             })(
               <Select style={{width: "120px"}}>
                 {playerList}
@@ -165,7 +181,7 @@ class GameForm extends Component {
 
           <FormItem>
             {getFieldDecorator(`player_games_attributes[${i}].win`)(
-              crownButton(i)
+              newCrownButton(i)
             )}
           </FormItem>
           <FormItem>
@@ -173,14 +189,38 @@ class GameForm extends Component {
               largestArmy(i)
             )}
           </FormItem>
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].longest_road`, {valuePropName: 'checked', initialValue: false})(
+              longestRoad(i)
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].victory_point_cards`, {valuePropName: 'checked', initialValue: false})(
+              victoryPointCards(i)
+            )}
+          </FormItem>
         </Row>
       )
     }
 
+    let playerGameRows = []
+    for (var i=0; i < this.state.playerCount; i++) {
+      playerGameRows.push(newPlayerGameRow(i))
+    }
+
     return (
       <Form layout='inline' onSubmit={this.handlePlayerSubmit}>
-        {newPlayerGameRow(0)}
-        {newPlayerGameRow(1)}
+        <Row>
+          <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+            <BlankHexGrid />
+          </Col>
+        </Row>
+        <Radio.Group onChange={this.updatePlayerCount} value={this.state.playerCount}>
+          <span style={{marginRight: '18px'}}>Number of players:</span>
+          <Radio value={3}>3</Radio>
+          <Radio value={4}>4</Radio>
+        </Radio.Group>
+        {playerGameRows}
         <FormItem>
           <Button type="primary" htmlType="submit">
             Create
