@@ -34,7 +34,7 @@ const BlankHexGrid = () => {
     document.querySelector('span[position="' + position + '"]').textContent = newResource
     var field_key = "layout_string"
     document.getElementById('layout_string').value = document.getElementById('layout-text').innerText
-    
+
   }
 
   return (
@@ -74,8 +74,7 @@ const BlankHexGrid = () => {
         </g>
       </svg>
 
-      //TODO: Make this invisible, use it to fill in Input field for form
-      <p id="layout-text">
+      <p id="layout-text" style={{display: "none"}}>
         <span position="0"></span>
         <span position="1"></span>
         <span position="2"></span>

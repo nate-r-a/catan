@@ -145,7 +145,9 @@ class GameForm extends Component {
       return(
         <div className="button">
           <img className="icon" style={{ filter:'none', opacity: .7 }} src={ require(`../images/backstage_filled.svg`) }/>
-          <InputNumber min={0} max={5} size="small"/>
+          {getFieldDecorator(`player_games_attributes[${i}].victory_point_cards`, {initialValue: 0})(
+            <InputNumber min={0} max={5} size="small"/>
+          )}
         </div>
       )
     }
@@ -161,14 +163,24 @@ class GameForm extends Component {
       )
     })
 
+    const colors = ["red", "lightgray", "blue", "brown", "green", "orange"]
+    const colorList = colors.map((color) => {
+      return(
+        <Option value={color} key={color}>
+          <span style={{color: color}}>■</span>
+        </Option>
+      )
+    })
+
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
 
     const newPlayerGameRow = (i) => {
       return(
         <Row>
           <FormItem>
+            <span>{i+1}. </span>
             {getFieldDecorator(`player_games_attributes[${i}].player_id`, {
-              rules: [{ required: true, message: 'Please input your name!' }], initialValue: "5"
+              rules: [{ required: true, message: 'Please input your name!' }]
             })(
               <Select style={{width: "120px"}}>
                 {playerList}
@@ -177,12 +189,18 @@ class GameForm extends Component {
           </FormItem>
           <FormItem>
             {getFieldDecorator(`player_games_attributes[${i}].score`, {
-              rules: [{ required: true }], initialValue: "5"
+              rules: [{ required: true }]
             })(
-              <InputNumber placeholder="score" />
+              <InputNumber min={2} max={10} placeholder="Score" />
             )}
           </FormItem>
-
+          <FormItem>
+            {getFieldDecorator(`player_games_attributes[${i}].color`)(
+              <Select style={{width: "50px"}}>
+                {colorList}
+              </Select>
+            )}
+          </FormItem>
           <FormItem>
             {getFieldDecorator(`player_games_attributes[${i}].win`)(
               newCrownButton(i)
@@ -199,10 +217,16 @@ class GameForm extends Component {
             )}
           </FormItem>
           <FormItem>
-            {getFieldDecorator(`player_games_attributes[${i}].victory_point_cards`, {valuePropName: 'checked', initialValue: false})(
-              victoryPointCards(i)
-            )}
+            <div className="button">
+              <img className="icon" style={{ filter:'none', opacity: .7 }} src={ require(`../images/backstage_filled.svg`) }/>
+
+                {getFieldDecorator(`player_games_attributes[${i}].victory_point_cards`, {initialValue: 0})(
+                  <InputNumber min={0} max={5} size="small"/>
+                )}
+
+            </div>
           </FormItem>
+
         </Row>
       )
     }
@@ -219,6 +243,15 @@ class GameForm extends Component {
             <BlankHexGrid />
           </Col>
         </Row>
+        <Row>
+          <FormItem>
+            {getFieldDecorator('dice_rolls_string', { initialValue: "",
+              rules: [{ required: true }]
+            })(
+              <Input placeholder="Dice rolls" />
+            )}
+          </FormItem>
+        </Row>
         <Radio.Group onChange={this.updatePlayerCount} value={this.state.playerCount}>
           <span style={{marginRight: '18px'}}>Number of players:</span>
           <Radio value={3}>3</Radio>
@@ -228,7 +261,7 @@ class GameForm extends Component {
           {getFieldDecorator('layout_string', { initialValue: "",
             rules: [{ required: true }]
           })(
-            <Input />
+            <Input style={{display: "none"}}/>
           )}
         </FormItem>
         {playerGameRows}

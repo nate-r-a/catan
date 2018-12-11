@@ -17,7 +17,14 @@ module Api
 
       # POST /player_games
       def create
-        @player_game = PlayerGame.new(player_game_params)
+        new_params = player_game_params.except(:color)
+        puts "!!!"
+        puts new_params
+
+        new_params[:color] = player_game_params[:color] == "lightgray" ? player_game_params[:color] : "white"
+        puts "@@@@"
+        puts new_params
+        @player_game = PlayerGame.new(new_params)
 
         if @player_game.save
           render json: @player_game, status: :created, location: @player_game
