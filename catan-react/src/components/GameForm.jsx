@@ -76,11 +76,15 @@ class GameForm extends Component {
 
   handlePlayerSubmit = (e) => {
     e.preventDefault()
+    console.log(this.props.form.getFieldValue('layout_string'))
+    this.props.form.setFieldsValue({layout_string: document.getElementById('layout_string').value})
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('Received values: ', values);
+        console.log(values['layout_string'])
         axios.post('http://localhost:3002/api/v1/games/', {
-          player_games_attributes: values["player_games_attributes"]
+          game: { player_games_attributes: values["player_games_attributes"],
+                  layout_string: values["layout_string"] }
         })
       }
     });
@@ -220,6 +224,13 @@ class GameForm extends Component {
           <Radio value={3}>3</Radio>
           <Radio value={4}>4</Radio>
         </Radio.Group>
+        <FormItem>
+          {getFieldDecorator('layout_string', { initialValue: "",
+            rules: [{ required: true }]
+          })(
+            <Input />
+          )}
+        </FormItem>
         {playerGameRows}
         <FormItem>
           <Button type="primary" htmlType="submit">

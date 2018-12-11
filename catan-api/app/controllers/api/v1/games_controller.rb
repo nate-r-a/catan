@@ -6,7 +6,7 @@ module Api
       # GET /games
       def index
         # @games = Game.all.sort
-        @games = [Game.third]
+        @games = [Game.first]
 
         # render json: @games, :include => [{ :player_games => { :except => [:created_at, :updated_at] }, ['player_games.players'] }]
         # render json: @games, include: :players
@@ -24,7 +24,15 @@ module Api
       def create
         puts "!!!"
         puts game_params
-        @game = Game.new(game_params)
+        puts game_params[:layout_string]
+        game_params[:layout] = game_params.delete(:layout_string).scan(/../)
+        puts "@@@@"
+        puts game_params
+
+        new_params = game_params.except(:layout_string)
+        new_params[:layout] = game_params[:layout_string].scan(/../)
+
+        @game = Game.new(new_params)
 
         if @game.save!
           render json: @game#, status: :created, location: @game
@@ -55,7 +63,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def game_params
-          params.permit(:dice_rolls, :layout, player_games_attributes: [:player_id, :game_id, :win, :score, :position, :largest_army])
+          params.require(:game).permit(:dice_rolls, :layout, :layout_string, player_games_attributes: [:player_id, :game_id, :win, :score, :position, :largest_army, :longest_road, :victory_point_cards])
         end
     end
   end

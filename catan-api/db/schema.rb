@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 2018_11_14_233344) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "wins"
-    t.integer "games_played"
+    t.integer "wins", default: 0
+    t.integer "games_played", default: 0
   end
 
   add_foreign_key "player_games", "games"

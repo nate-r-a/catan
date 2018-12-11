@@ -1,4 +1,5 @@
 import React from 'react'
+import { Input } from 'antd'
 
 const BlankHexGrid = () => {
   let resourceArray = ["wo", "wh", "sh", "br", "st", "de"]
@@ -29,7 +30,11 @@ const BlankHexGrid = () => {
       event.target.style.fill = colors[newResource]
     }
 
+    console.log('span[position="' + position + '"]')
     document.querySelector('span[position="' + position + '"]').textContent = newResource
+    var field_key = "layout_string"
+    document.getElementById('layout_string').value = document.getElementById('layout-text').innerText
+    
   }
 
   return (
@@ -58,7 +63,7 @@ const BlankHexGrid = () => {
           <use xlinkHref="#pod" onClick={setFill} position="14" transform="translate(68, 50)"/>
           <use xlinkHref="#pod" onClick={setFill} position="4" transform="translate(86, 50)"/>
           // Row 4
-          <use xlinkHref="#pod" onClick={setFill} position="19" transform="translate(23, 65)"/>
+          <use xlinkHref="#pod" onClick={setFill} position="9" transform="translate(23, 65)"/>
           <use xlinkHref="#pod" onClick={setFill} position="16" transform="translate(41, 65)"/>
           <use xlinkHref="#pod" onClick={setFill} position="15" transform="translate(59, 65)"/>
           <use xlinkHref="#pod" onClick={setFill} position="5" transform="translate(77, 65)"/>
@@ -70,7 +75,7 @@ const BlankHexGrid = () => {
       </svg>
 
       //TODO: Make this invisible, use it to fill in Input field for form
-      <p>
+      <p id="layout-text">
         <span position="0"></span>
         <span position="1"></span>
         <span position="2"></span>
