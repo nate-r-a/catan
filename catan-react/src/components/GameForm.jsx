@@ -78,6 +78,7 @@ class GameForm extends Component {
     e.preventDefault()
     console.log(this.props.form.getFieldValue('layout_string'))
     this.props.form.setFieldsValue({layout_string: document.getElementById('layout_string').value})
+    this.props.form.setFieldsValue({dice_rolls_string: document.getElementById('dice_rolls_string').value})
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values: ', values);
@@ -92,6 +93,12 @@ class GameForm extends Component {
 
   updatePlayerCount = (e) => {
     this.setState({playerCount: e.target.value})
+  }
+
+  addDiceRoll = (e) => {
+    e.preventDefault()
+    document.getElementById('dice_rolls_string').value += (e.target.value + ", ")
+    e.target.value = ""
   }
 
   render() {
@@ -245,11 +252,15 @@ class GameForm extends Component {
         </Row>
         <Row>
           <FormItem>
-            {getFieldDecorator('dice_rolls_string', { initialValue: "",
-              rules: [{ required: true }]
-            })(
-              <Input placeholder="Dice rolls" />
-            )}
+            <Input.Group>
+              <Input onPressEnter={this.addDiceRoll} style={{width: "15%"}} />
+              {getFieldDecorator('dice_rolls_string', {
+                rules: [{ required: true }]
+              })(
+                <Input placeholder="<-- input dice rolls here" style={{width: "85%"}} />
+              )}
+            </Input.Group>
+
           </FormItem>
         </Row>
         <Radio.Group onChange={this.updatePlayerCount} value={this.state.playerCount}>
@@ -258,7 +269,7 @@ class GameForm extends Component {
           <Radio value={4}>4</Radio>
         </Radio.Group>
         <FormItem>
-          {getFieldDecorator('layout_string', { initialValue: "",
+          {getFieldDecorator('layout_string', {
             rules: [{ required: true }]
           })(
             <Input style={{display: "none"}}/>
