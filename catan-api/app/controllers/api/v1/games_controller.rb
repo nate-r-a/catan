@@ -24,7 +24,7 @@ module Api
       def create
         new_params = game_params.except(:layout_string, :dice_rolls_string)
         new_params[:layout] = game_params[:layout_string].scan(/../)
-        new_params[:dice_rolls] = game_params[:dice_rolls_string].split
+        new_params[:dice_rolls] = game_params[:dice_rolls_string].split(", ")
 
         @game = Game.new(new_params)
 
