@@ -13,7 +13,7 @@ class GamesContainer extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3002/api/v1/games/')
+    axios.get('http://localhost:3001/api/v1/games/')
     .then(response => {
       console.log(response)
       this.setState({games: response.data})
